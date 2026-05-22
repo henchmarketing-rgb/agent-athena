@@ -1,0 +1,32 @@
+{
+  "name": "agent-athena",
+  "version": "0.1.0",
+  "description": "Open-source multi-agent AI system on OpenClaw + Paperclip. Builds while you sleep.",
+  "license": "MIT",
+  "homepage": "https://github.com/henchmarketing-rgb/agent-athena",
+  "bugs": "https://github.com/henchmarketing-rgb/agent-athena/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henchmarketing-rgb/agent-athena.git"
+  },
+  "keywords": [
+    "multi-agent",
+    "ai",
+    "claude",
+    "discord-bot",
+    "openclaw",
+    "paperclip",
+    "automation"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "for f in scripts/*.js; do node --check \"$f\"; done",
+    "shellcheck": "shellcheck install.sh scripts/*.sh"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3"
+  },
+  "devDependencies": {}
+}

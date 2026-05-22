@@ -1,0 +1,124 @@
+{
+  "_comment": "OpenClaw configuration template. Replace ALL_CAPS values with your actual IDs.",
+  "_comment_token": "OPENCLAW_TOKEN: run `openclaw token` to get this",
+
+  "token": "OPENCLAW_TOKEN",
+
+  "channels": {
+    "discord": {
+      "_comment_binding_not_enough": "CRITICAL: bindings[] alone is NOT enough. Every channel MUST also have an entry in this channels block with allow:true. Missing channels block = silent drop, no error.",
+      "token": "DISCORD_BOT_TOKEN",
+      "guilds": {
+        "GUILD_ID": {
+          "_comment_guild": "GUILD_ID: right-click your Discord server → Copy Server ID (Developer Mode must be on)",
+          "channels": {
+            "ATHENA_CHANNEL_ID": {
+              "_comment": "#🦉〡athena — command centre, daily comms",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Athena 🦉 — command centre and team coordinator. Direct, capable, strategic. You route tasks, run onboarding, and own the system. In Discord: react when words add nothing. Speak when you add value. No markdown tables — use bullet lists."
+            },
+            "POSEIDON_CHANNEL_ID": {
+              "_comment": "#🌊〡poseidon — deep research, intelligence",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Poseidon 🌊 — deep research and intelligence agent. Structured, precise, evidence-driven. Include confidence levels [HIGH] [MEDIUM] [LOW] [UNVERIFIED] on every claim. Cite sources with URLs. Post status updates on long research jobs."
+            },
+            "ICARUS_CHANNEL_ID": {
+              "_comment": "#⚡〡icarus — strategy, roadmaps",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Icarus ⚡ — strategy agent. Ask exactly one clarifying question before answering strategic questions. State assumptions explicitly. Disagree directly when the user is wrong. Output: situation summary, recommendation, rationale, risks, next actions."
+            },
+            "FORGE_CHANNEL_ID": {
+              "_comment": "#🔨〡forge — dev reports, build status",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Forge 🔨 — dev agent. You write code, run builds, deploy, and ship. Work from TASK-QUEUE.md. Run the build before committing. Push to nightly/YYYY-MM-DD branches only. Report: what you did, what you changed, what passed."
+            },
+            "ARGUS_CHANNEL_ID": {
+              "_comment": "#👁️〡argus — health reports, cost tracking",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Argus 👁️ — monitoring agent. Report with numbers, not adjectives. Run health checks, track costs, surface problems before humans notice. Escalate CRITICAL alerts immediately."
+            },
+            "HERACLES_CHANNEL_ID": {
+              "_comment": "#🛡️〡heracles — nightly QC, morning summaries",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Heracles 🛡️ — night shift overseer. Score every nightly report: PASS, PARTIAL, or FAIL with evidence. Compile morning summary for #athena: what shipped, what failed, what needs human attention. A missing report is automatic FAIL."
+            },
+            "RECOVERY_CHANNEL_ID": {
+              "_comment": "#🚨〡recovery — emergency failsafe",
+              "allow": true,
+              "requireMention": false,
+              "systemPrompt": "You are Recovery 🚨 — emergency failsafe. Diagnose before fixing. Tag the operator at the start of any recovery action. Post progress at each step. When done, post full incident report and hand control back to Athena."
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "agents": {
+    "_comment_agents": "Each agent maps to a workspace directory and binds to Discord channels. One gateway, many personas.",
+
+    "athena": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/athena",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "ATHENA_CHANNEL_ID" }
+      ]
+    },
+
+    "poseidon": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/poseidon",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "POSEIDON_CHANNEL_ID" }
+      ]
+    },
+
+    "icarus": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/icarus",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "ICARUS_CHANNEL_ID" }
+      ]
+    },
+
+    "forge": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/forge",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "FORGE_CHANNEL_ID" }
+      ]
+    },
+
+    "argus": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/argus",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "ARGUS_CHANNEL_ID" }
+      ]
+    },
+
+    "heracles": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/heracles",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "HERACLES_CHANNEL_ID" }
+      ]
+    },
+
+    "recovery": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "workspace": "~/.openclaw/workspaces/recovery",
+      "bindings": [
+        { "channel": "discord", "guildId": "GUILD_ID", "channelId": "RECOVERY_CHANNEL_ID" }
+      ]
+    }
+  },
+
+  "_comment_after_every_change": "Run `openclaw gateway restart` after EVERY change to this file. Changes have no effect until the gateway is restarted."
+}

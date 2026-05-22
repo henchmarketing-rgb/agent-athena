@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 44px;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82, transparent);
+  }
+
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .brand-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+  }
+
+  .page-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #3a4a5a;
+    letter-spacing: 0.18em;
+  }
+
+  .headline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 48px;
+  }
+
+  /* Pipeline */
+  .pipeline {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+    padding: 16px 0;
+  }
+
+  /* Top row — main flow nodes */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .node-box {
+    border: 1px solid rgba(93,228,199,0.35);
+    background: rgba(93,228,199,0.04);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 180px;
+    min-height: 200px;
+    justify-content: center;
+    position: relative;
+  }
+
+  .node-box.you {
+    border-color: rgba(93,228,199,0.6);
+    background: rgba(93,228,199,0.08);
+  }
+
+  .node-box.athena {
+    border-color: rgba(93,228,199,0.6);
+    background: rgba(93,228,199,0.08);
+  }
+
+  .node-emoji {
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .node-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #5de4c7;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  .node-role {
+    font-size: 12px;
+    color: #4a5a6a;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* Arrow */
+  .arrow-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .arrow-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82);
+    position: relative;
+  }
+
+  .arrow-line::after {
+    content: '▶';
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #5de4c7;
+    font-size: 10px;
+  }
+
+  .arrow-label {
+    font-size: 10px;
+    color: #3a4a5a;
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+
+  /* Office agents row */
+  .office-section {
+    margin-top: 0;
+  }
+
+  .office-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #2a5a50;
+    letter-spacing: 0.2em;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .office-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .office-node {
+    border: 1px solid rgba(42,143,130,0.3);
+    background: rgba(42,143,130,0.04);
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 140px;
+  }
+
+  .office-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #2a8f82;
+    letter-spacing: 0.06em;
+  }
+
+  .office-role {
+    font-size: 13px;
+    color: #3a5a52;
+    text-align: center;
+  }
+
+  /* Vertical connector from Icarus down */
+  .vertical-connector {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 0;
+    position: relative;
+  }
+
+  .v-line {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(180deg, #2a8f82, rgba(42,143,130,0.3));
+    position: relative;
+  }
+
+  .v-line::after {
+    content: '▼';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #2a8f82;
+    font-size: 8px;
+  }
+
+  /* Return arrow at bottom */
+  .return-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding: 0 0;
+    position: relative;
+  }
+
+  .return-label {
+    font-size: 12px;
+    color: #2a8f82;
+    letter-spacing: 0.06em;
+    margin-right: 12px;
+  }
+
+  .return-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(42,143,130,0.2), #2a8f82);
+    position: relative;
+    margin: 0 12px;
+    max-width: 600px;
+  }
+
+  .approval-badge {
+    border: 1px solid rgba(42,143,130,0.3);
+    padding: 6px 14px;
+    font-size: 11px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .footer {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(93,228,199,0.08);
+    padding-top: 16px;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.06em;
+  }
+
+  .github-url {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+
+<div class="brand-row">
+  <div class="brand-name">AGENT ATHENA 🦉</div>
+  <div class="page-title">── TASK PIPELINE ──</div>
+</div>
+
+<div class="headline">HOW IT WORKS.</div>
+
+<div class="pipeline">
+
+  <!-- Main flow -->
+  <div class="flow-row">
+
+    <div class="node">
+      <div class="node-box you">
+        <div class="node-emoji">👤</div>
+        <div class="node-name">YOU</div>
+        <div class="node-role">Brief Athena<br>in Discord</div>
+      </div>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">brief</div>
+    </div>
+
+    <div class="node">
+      <div class="node-box athena">
+        <div class="node-emoji">🦉</div>
+        <div class="node-name">ATHENA</div>
+        <div class="node-role">Coordinator<br>routes task</div>
+      </div>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">strategise</div>
+    </div>
+
+    <div class="node">
+      <div class="node-box">
+        <div class="node-emoji">⚡</div>
+        <div class="node-name">ICARUS</div>
+        <div class="node-role">Breaks into tasks<br>via Paperclip API</div>
+      </div>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">assign + monitor</div>
+    </div>
+
+    <div class="node">
+      <div class="node-box">
+        <div class="node-emoji">⚙️</div>
+        <div class="node-name">OFFICE</div>
+        <div class="node-role">Execute via<br>heartbeats</div>
+      </div>
+    </div>
+
+    <div class="arrow-wrap">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">synthesise</div>
+    </div>
+
+    <div class="node">
+      <div class="node-box athena">
+        <div class="node-emoji">🦉</div>
+        <div class="node-name">ATHENA</div>
+        <div class="node-role">Reports back<br>to you</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Office agents expanded -->
+  <div class="office-section">
+    <div class="vertical-connector" style="margin-left: calc(50% + 32px);">
+      <div class="v-line"></div>
+    </div>
+    <div class="office-label">── OFFICE AGENTS (EXECUTE VIA PAPERCLIP HEARTBEATS) ──</div>
+    <div class="office-row">
+      <div class="office-node"><div class="office-name">COPY</div><div class="office-role">Brand content</div></div>
+      <div class="office-node"><div class="office-name">OUTREACH</div><div class="office-role">Cold email</div></div>
+      <div class="office-node"><div class="office-name">ANALYTICS</div><div class="office-role">KPIs</div></div>
+      <div class="office-node"><div class="office-name">SEO</div><div class="office-role">Audits</div></div>
+      <div class="office-node"><div class="office-name">SOCIAL</div><div class="office-role">Social media</div></div>
+      <div class="office-node"><div class="office-name">ADS</div><div class="office-role">PPC</div></div>
+      <div class="office-node"><div class="office-name">VISUAL</div><div class="office-role">Art direction</div></div>
+    </div>
+  </div>
+
+  <!-- Return + approval -->
+  <div class="return-row">
+    <div class="return-label">output → review →</div>
+    <div class="approval-badge">✓ YOU APPROVE BEFORE ANYTHING SHIPS</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-note">Nothing moves without sign-off. backlog → in_progress → in_review → done.</div>
+  <div class="github-url">github.com/henchmarketing-rgb/agent-athena</div>
+</div>
+
+</body>
+</html>

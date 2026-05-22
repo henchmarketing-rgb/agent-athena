@@ -1,0 +1,37 @@
+{
+  "name": "Hermes Agent",
+  "type": "hermes",
+  "version_required": ">=0.12.0",
+  "binary": "hermes",
+  "install": {
+    "method": "git+setup",
+    "repo": "https://github.com/nousresearch/hermes-agent.git",
+    "clone_path": "$HOME/Apps/hermes-agent",
+    "setup_script": "./setup-hermes.sh"
+  },
+  "home_dir": "$HOME/.hermes",
+  "workspace_base": "$HOME/.hermes/workspaces",
+  "topology": "single-profile-multi-persona",
+  "discord_model": "single-bot-single-active-persona",
+  "description": "One Hermes profile. Athena is the active persona; the other 13 (Poseidon, Icarus, Forge, Argus, Heracles, Recovery, office team) load as Hermes skills that Athena dispatches via cron + Paperclip. Self-improving runtime — Hermes creates new skills from experience.",
+  "commands": {
+    "onboard": "hermes login",
+    "gateway_start": "hermes gateway start",
+    "gateway_run": "hermes gateway start --background",
+    "gateway_stop": "hermes gateway stop",
+    "doctor": "hermes doctor",
+    "cron_add": "hermes cron add",
+    "cron_list": "hermes cron list",
+    "cron_remove": "hermes cron remove"
+  },
+  "env_required": [
+    "OPENROUTER_API_KEY",
+    "DISCORD_BOT_TOKEN"
+  ],
+  "notes": [
+    "Hermes routes all LLM calls through OpenRouter by default (one key, many models).",
+    "Workspace .md files (SOUL/IDENTITY/AGENTS/MEMORY/CURRENT/HEARTBEAT/CLAUDE) live at ~/.hermes/workspaces/<agent>/ and are referenced from cli-config.yaml as system_prompt sources.",
+    "Multi-persona topology: Athena is the active Hermes profile. Other 13 personas exist as workspace dirs the active Athena profile can load via skills/dispatch and cron.",
+    "For full 14-channel multi-agent topology, use the OpenClaw runtime instead — Hermes is single-profile by design."
+  ]
+}

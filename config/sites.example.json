@@ -1,0 +1,16 @@
+{
+  "sites": [
+    {
+      "name": "Main Website",
+      "url": "https://example.com"
+    },
+    {
+      "name": "API",
+      "url": "https://api.example.com/health"
+    },
+    {
+      "name": "Dashboard",
+      "url": "https://app.example.com"
+    }
+  ]
+}

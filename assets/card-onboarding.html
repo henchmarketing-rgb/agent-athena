@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 44px;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82, transparent);
+  }
+
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+
+  .brand-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.2em;
+  }
+
+  /* Split layout */
+  .main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    gap: 0 72px;
+    align-items: stretch;
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #2a8f82;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .headline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 56px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subhead {
+    font-size: 15px;
+    color: #4a5a6a;
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .install-cmd {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #5de4c7;
+    background: rgba(93,228,199,0.06);
+    border: 1px solid rgba(93,228,199,0.18);
+    padding: 10px 20px;
+    width: fit-content;
+  }
+
+  .prompt { color: #2a6f60; }
+
+  /* Right — phase progression */
+  .right {
+    border-left: 1px solid rgba(93,228,199,0.1);
+    padding-left: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: space-between;
+  }
+
+  .phase-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #2a8f82;
+    letter-spacing: 0.18em;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .phase-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .phase-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  .phase-dot {
+    width: 10px;
+    height: 10px;
+    background: #5de4c7;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .phase-line {
+    width: 1px;
+    flex: 1;
+    background: rgba(93,228,199,0.2);
+    margin: 4px 0;
+  }
+
+  .phase-row:last-child .phase-line { display: none; }
+
+  .phase-content {
+    padding: 2px 0 22px 0;
+    flex: 1;
+  }
+
+  .phase-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #5de4c7;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+    margin-bottom: 4px;
+  }
+
+  .phase-title {
+    font-size: 15px;
+    color: #c9d1d9;
+    letter-spacing: 0.04em;
+    margin-bottom: 2px;
+  }
+
+  .phase-desc {
+    font-size: 12px;
+    color: #4a5a6a;
+    letter-spacing: 0.03em;
+  }
+
+  .footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(93,228,199,0.1);
+  }
+
+  .footer-note {
+    font-size: 13px;
+    color: #3a4a5a;
+    letter-spacing: 0.08em;
+  }
+
+  .github-url {
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+
+<div class="brand-row">
+  <div class="brand-name">AGENT ATHENA 🦉</div>
+  <div class="brand-tag">Open Source · Discord Native</div>
+</div>
+
+<div class="main">
+  <div class="left">
+    <div class="eyebrow">AFTER INSTALL.SH</div>
+    <div class="headline">SAY<br>HELLO.</div>
+    <div class="subhead">Run the script. Go to #athena<br>in Discord. Athena runs 7<br>onboarding phases — all<br>conversational. No config files.</div>
+    <div class="install-cmd"><span class="prompt">$</span> bash install.sh</div>
+  </div>
+
+  <div class="right">
+    <div class="phase-label">── 7 ONBOARDING PHASES ──</div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 01</div>
+        <div class="phase-title">Identity & memory setup</div>
+        <div class="phase-desc">Who you are, what you're building, your working style</div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 02</div>
+        <div class="phase-title">Team introduction</div>
+        <div class="phase-desc">Meet Poseidon, Icarus, Forge, Argus, Heracles, Recovery</div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 03</div>
+        <div class="phase-title">Project registration</div>
+        <div class="phase-desc">Add your active projects, repos, and goals</div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 04</div>
+        <div class="phase-title">Office agent setup</div>
+        <div class="phase-desc">Register office agents in Paperclip, assign roles</div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 05</div>
+        <div class="phase-title">Nightly system activation</div>
+        <div class="phase-desc">Per-project briefs, schedules, Heracles QC wired up</div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 06</div>
+        <div class="phase-title">First task</div>
+        <div class="phase-desc">Brief Icarus on something real. Watch the pipeline run.</div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-connector"><div class="phase-dot"></div><div class="phase-line"></div></div>
+      <div class="phase-content">
+        <div class="phase-num">PHASE 07</div>
+        <div class="phase-title">Handover complete</div>
+        <div class="phase-desc">System is live. Athena takes the wheel.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-note">All conversational. All in Discord. Under an hour start to finish.</div>
+  <div class="github-url">github.com/henchmarketing-rgb/agent-athena</div>
+</div>
+
+</body>
+</html>

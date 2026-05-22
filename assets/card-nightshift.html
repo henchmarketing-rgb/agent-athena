@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 44px 64px 40px;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 3px,
+      rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Ambient glow — right side */
+  body::before {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    right: -150px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(45,175,140,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82, transparent);
+  }
+
+  /* Header row */
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 44px;
+  }
+
+  .left-header {}
+
+  .eyebrow {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #2a8f82;
+    letter-spacing: 0.12em;
+    margin-bottom: 16px;
+  }
+
+  .main-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 38px;
+    line-height: 1.3;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .timestamp {
+    text-align: right;
+  }
+
+  .ts-label {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .ts-time {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 22px;
+    color: #5de4c7;
+    opacity: 0.5;
+  }
+
+  .ts-date {
+    font-size: 12px;
+    color: #3a4a5a;
+    margin-top: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82 25%, rgba(42,143,130,0.1) 70%, transparent);
+    margin-bottom: 36px;
+  }
+
+  /* Task list */
+  .task-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .task-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(93,228,199,0.07);
+    gap: 24px;
+    flex: 1;
+  }
+
+  .task-row:last-child {
+    border-bottom: none;
+  }
+
+  .check {
+    font-size: 16px;
+    color: #5de4c7;
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: 20px;
+  }
+
+  .task-body {
+    flex: 1;
+  }
+
+  .task-agent {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #5de4c7;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  .task-desc {
+    font-size: 14px;
+    color: #8b949e;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  .task-meta {
+    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .task-status {
+    font-size: 11px;
+    color: #2a8f82;
+    background: rgba(42,143,130,0.12);
+    border: 1px solid rgba(42,143,130,0.25);
+    padding: 3px 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .task-output {
+    font-size: 10px;
+    color: #3a4a5a;
+    margin-top: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(93,228,199,0.12);
+  }
+
+  .heracles-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.08em;
+  }
+
+  .heracles-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #5de4c7;
+    opacity: 0.6;
+  }
+
+  .score {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #5de4c7;
+  }
+
+  .score-label {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+
+<div class="header-row">
+  <div class="left-header">
+    <div class="eyebrow">AGENT ATHENA 🦉 · MORNING REPORT</div>
+    <div class="main-title">WHILE YOU<br>SLEPT.</div>
+  </div>
+  <div class="timestamp">
+    <div class="ts-label">COMPLETED AT</div>
+    <div class="ts-time">06:47 AM</div>
+    <div class="ts-date">2026-04-22</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="task-list">
+
+  <div class="task-row">
+    <div class="check">✓</div>
+    <div class="task-body">
+      <div class="task-agent">FORGE</div>
+      <div class="task-desc">Auth flow rewrite — nightly/2026-04-22 · build passed · 3 files changed</div>
+    </div>
+    <div class="task-meta">
+      <div class="task-status">BUILD PASS</div>
+      <div class="task-output">committed + pushed</div>
+    </div>
+  </div>
+
+  <div class="task-row">
+    <div class="check">✓</div>
+    <div class="task-body">
+      <div class="task-agent">SEO</div>
+      <div class="task-desc">Full site audit · 14 issues flagged · content brief for 3 priority pages</div>
+    </div>
+    <div class="task-meta">
+      <div class="task-status">COMPLETE</div>
+      <div class="task-output">→ /projects/output/seo/</div>
+    </div>
+  </div>
+
+  <div class="task-row">
+    <div class="check">✓</div>
+    <div class="task-body">
+      <div class="task-agent">COPYWRITER</div>
+      <div class="task-desc">Q2 campaign — 3 blog drafts, 6 social variants, email sequence (5 steps)</div>
+    </div>
+    <div class="task-meta">
+      <div class="task-status">COMPLETE</div>
+      <div class="task-output">→ /projects/output/copy/</div>
+    </div>
+  </div>
+
+  <div class="task-row">
+    <div class="check">✓</div>
+    <div class="task-body">
+      <div class="task-agent">OUTREACH</div>
+      <div class="task-desc">47 LinkedIn sequences drafted · personalised per profile · awaiting approval</div>
+    </div>
+    <div class="task-meta">
+      <div class="task-status">IN REVIEW</div>
+      <div class="task-output">awaiting sign-off</div>
+    </div>
+  </div>
+
+  <div class="task-row">
+    <div class="check">✓</div>
+    <div class="task-body">
+      <div class="task-agent">ANALYTICS</div>
+      <div class="task-desc">Weekly KPI report · 12 metrics · 3 anomalies flagged with recommendations</div>
+    </div>
+    <div class="task-meta">
+      <div class="task-status">COMPLETE</div>
+      <div class="task-output">→ Paperclip dashboard</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="heracles-line">
+    <span class="heracles-name">HERACLES</span>
+    <span>quality control · all runs verified</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="score-label">NIGHTLY SCORE</div>
+    <div class="score">5 / 5</div>
+  </div>
+</div>
+
+</body>
+</html>

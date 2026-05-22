@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 44px;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(45,175,140,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82, transparent);
+  }
+
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 44px;
+  }
+
+  .brand-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.2em;
+  }
+
+  .main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 80px;
+    align-items: stretch;
+  }
+
+  .col-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Left — needs */
+  .col-left {}
+
+  .col-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+  }
+
+  .col-label.needs { color: #5de4c7; }
+  .col-label.handled { color: #2a5a50; }
+
+  .headline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 44px;
+    line-height: 1.25;
+    margin-bottom: 32px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .need-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(93,228,199,0.08);
+  }
+
+  .need-check {
+    width: 22px;
+    height: 22px;
+    border: 1px solid #5de4c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #5de4c7;
+  }
+
+  .need-text {
+    font-size: 17px;
+    color: #c9d1d9;
+    letter-spacing: 0.04em;
+  }
+
+  .need-sub {
+    font-size: 12px;
+    color: #4a5a6a;
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Right — handled */
+  .col-right {
+    border-left: 1px solid rgba(93,228,199,0.08);
+    padding-left: 64px;
+    padding-top: 0;
+  }
+
+  .handled-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(93,228,199,0.05);
+  }
+
+  .handled-icon {
+    font-size: 11px;
+    color: #2a8f82;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  .handled-text {
+    font-size: 14px;
+    color: #4a5a6a;
+    letter-spacing: 0.04em;
+  }
+
+  .footer {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(93,228,199,0.1);
+  }
+
+  .footer-cmd {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #5de4c7;
+    background: rgba(93,228,199,0.06);
+    border: 1px solid rgba(93,228,199,0.18);
+    padding: 10px 22px;
+  }
+
+  .prompt { color: #2a6f60; }
+
+  .github-url {
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+
+<div class="brand-row">
+  <div class="brand-name">AGENT ATHENA 🦉</div>
+  <div class="brand-tag">Open Source · Plug & Play</div>
+</div>
+
+<div class="main">
+  <div class="col-left">
+    <div class="col-label needs">── WHAT YOU NEED ──</div>
+    <div class="headline">THAT'S<br>ALL.</div>
+
+    <div class="need-row">
+      <div class="need-check">✓</div>
+      <div>
+        <div class="need-text">Node.js 20+</div>
+        <div class="need-sub">already on most machines</div>
+      </div>
+    </div>
+    <div class="need-row">
+      <div class="need-check">✓</div>
+      <div>
+        <div class="need-text">A Discord server</div>
+        <div class="need-sub">free, 2 minutes to create</div>
+      </div>
+    </div>
+    <div class="need-row">
+      <div class="need-check">✓</div>
+      <div>
+        <div class="need-text">Anthropic account</div>
+        <div class="need-sub">existing Claude subscription works — no API billing required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-right">
+    <div class="col-label handled">── HANDLED BY INSTALL.SH ──</div>
+    <div style="margin-top: 8px;">
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">Claude auth setup</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">Discord bot creation & token</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">OpenClaw install & onboard</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">All workspace files generated</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">Agent personas & memory configured</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">Gateway start & channel routing</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">Nightly scheduler configured</span></div>
+      <div class="handled-row"><span class="handled-icon">→</span><span class="handled-text">GitHub backup wired up</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-cmd"><span class="prompt">$</span> bash install.sh</div>
+  <div class="github-url">github.com/henchmarketing-rgb/agent-athena</div>
+</div>
+
+</body>
+</html>

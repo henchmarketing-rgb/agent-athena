@@ -1,0 +1,29 @@
+{
+  "name": "OpenClaw",
+  "type": "openclaw",
+  "version_required": ">=0.1.0",
+  "binary": "openclaw",
+  "install": {
+    "method": "npm",
+    "package": "openclaw"
+  },
+  "home_dir": "$HOME/.openclaw",
+  "workspace_base": "$HOME/.openclaw/workspaces",
+  "topology": "multi-agent-multi-channel",
+  "discord_model": "single-bot-channel-routed-personas",
+  "description": "One Discord bot, 14 channels, channel-level systemPrompt switches persona. Live multi-agent chat — talk to any of the 14 personas in their channel. Native Athena topology.",
+  "commands": {
+    "onboard": "openclaw onboard",
+    "gateway_start": "openclaw gateway start",
+    "gateway_run": "openclaw gateway run",
+    "gateway_stop": "openclaw gateway stop",
+    "doctor": "openclaw doctor",
+    "cron_add": "openclaw cron add",
+    "cron_list": "openclaw cron list",
+    "cron_remove": "openclaw cron remove"
+  },
+  "env_required": [
+    "DISCORD_BOT_TOKEN",
+    "DISCORD_GUILD_ID"
+  ]
+}

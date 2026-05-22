@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+.firecrawl/
+.playwright-mcp/
+.remember/
+*.env
+.env*

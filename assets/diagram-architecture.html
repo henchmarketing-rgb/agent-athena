@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 44px;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82, transparent);
+  }
+
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+
+  .brand-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+  }
+
+  .page-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #3a4a5a;
+    letter-spacing: 0.18em;
+  }
+
+  .headline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 40px;
+  }
+
+  .arch {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .layer {
+    border: 1px solid rgba(93,228,199,0.12);
+    background: rgba(93,228,199,0.02);
+    padding: 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+  }
+
+  .layer.primary {
+    border-color: rgba(93,228,199,0.3);
+    background: rgba(93,228,199,0.04);
+  }
+
+  .layer-tag {
+    position: absolute;
+    top: -1px;
+    left: 20px;
+    background: #0a0e13;
+    padding: 0 8px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    color: #5de4c7;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+  }
+
+  .layer-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #5de4c7;
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+  }
+
+  .layer-sub {
+    font-size: 12px;
+    color: #4a5a6a;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #6a7a8a;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  .feat-icon {
+    color: #2a8f82;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Dividing lines between layers */
+  .arch-connector {
+    position: absolute;
+    top: 50%;
+    right: -11px;
+    transform: translateY(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .conn-dot {
+    width: 6px;
+    height: 6px;
+    background: #2a8f82;
+    opacity: 0.5;
+  }
+
+  .layer-divider {
+    height: 100%;
+    width: 1px;
+    background: rgba(93,228,199,0.1);
+    position: absolute;
+    right: -10px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(93,228,199,0.2);
+    padding: 4px 10px;
+    font-size: 11px;
+    color: #5de4c7;
+    letter-spacing: 0.06em;
+    width: fit-content;
+    margin-top: auto;
+  }
+
+  .footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(93,228,199,0.08);
+    padding-top: 14px;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.06em;
+  }
+
+  .github-url {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+
+<div class="brand-row">
+  <div class="brand-name">AGENT ATHENA 🦉</div>
+  <div class="page-title">── ARCHITECTURE ──</div>
+</div>
+
+<div class="headline">BUILT ON THREE LAYERS.</div>
+
+<div class="arch">
+
+  <!-- Layer 1: OpenClaw -->
+  <div class="layer primary">
+    <div class="layer-tag">LAYER 01</div>
+    <div class="layer-title">OPENCLAW</div>
+    <div class="layer-sub">Agent runtime. Runs your Discord (or Telegram) gateway, manages sessions, memory, and skills.</div>
+    <div class="feature-list">
+      <div class="feature"><span class="feat-icon">→</span>Multi-channel personas — one bot, 7 agents</div>
+      <div class="feature"><span class="feat-icon">→</span>File-based persistent memory per agent</div>
+      <div class="feature"><span class="feat-icon">→</span>Session management with idle resets</div>
+      <div class="feature"><span class="feat-icon">→</span>Skills system — agents learn new capabilities</div>
+      <div class="feature"><span class="feat-icon">→</span>Cron scheduler for nightly agents</div>
+      <div class="feature"><span class="feat-icon">→</span>MCP server integration (GitHub, browser, Stripe...)</div>
+      <div class="feature"><span class="feat-icon">→</span>~97% prompt cache hit rate on Claude</div>
+    </div>
+    <div class="badge">210K+ GitHub stars</div>
+  </div>
+
+  <!-- Layer 2: Paperclip -->
+  <div class="layer primary">
+    <div class="layer-tag">LAYER 02</div>
+    <div class="layer-title">PAPERCLIP</div>
+    <div class="layer-sub">Company orchestration. Org chart, task queue, budgets, heartbeat protocol, governance.</div>
+    <div class="feature-list">
+      <div class="feature"><span class="feat-icon">→</span>Full org chart — Icarus is CEO, agents report up</div>
+      <div class="feature"><span class="feat-icon">→</span>Task pipeline: backlog → in_progress → in_review → done</div>
+      <div class="feature"><span class="feat-icon">→</span>Heartbeat protocol — office agents poll for tasks</div>
+      <div class="feature"><span class="feat-icon">→</span>Atomic task checkout (409 = never double-execute)</div>
+      <div class="feature"><span class="feat-icon">→</span>Budget tracking and approval gates</div>
+      <div class="feature"><span class="feat-icon">→</span>Nothing ships without human sign-off</div>
+    </div>
+    <div class="badge">Open source</div>
+  </div>
+
+  <!-- Layer 3: Interface -->
+  <div class="layer">
+    <div class="layer-tag">LAYER 03</div>
+    <div class="layer-title">INTERFACE + MODEL</div>
+    <div class="layer-sub">How you talk to the system and what powers the agents.</div>
+    <div class="feature-list">
+      <div class="feature"><span class="feat-icon">→</span>Discord — primary interface (Telegram also supported)</div>
+      <div class="feature"><span class="feat-icon">→</span>Claude by Anthropic — default model</div>
+      <div class="feature"><span class="feat-icon">→</span>Any OpenAI-compatible provider also works</div>
+      <div class="feature"><span class="feat-icon">→</span>Claude subscription (setup-token) — no API billing</div>
+      <div class="feature"><span class="feat-icon">→</span>NVIDIA NIM free tier for research agents</div>
+      <div class="feature"><span class="feat-icon">→</span>Cloud or local — VPS guide included</div>
+    </div>
+    <div class="badge">Your infra, your data</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-note">Athena sits on top — workspace files, agent personas, nightly system, skill review.</div>
+  <div class="github-url">github.com/henchmarketing-rgb/agent-athena</div>
+</div>
+
+</body>
+</html>

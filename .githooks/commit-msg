@@ -1,0 +1,19 @@
+#!/bin/bash
+# commit-msg hook — strip Claude footprints from commit messages
+# Removes: Co-Authored-By: Claude trailers and claude.ai/code/ session URLs
+# Activate: git config core.hooksPath .githooks
+
+MSG_FILE="$1"
+
+# Strip Co-Authored-By: Claude lines (any variant)
+sed -i '/^Co-Authored-By:.*[Cc]laude.*/d' "$MSG_FILE"
+sed -i '/^Co-authored-by:.*[Cc]laude.*/d' "$MSG_FILE"
+
+# Strip claude.ai session URL lines
+sed -i '/^https:\/\/claude\.ai\/code\/.*/d' "$MSG_FILE"
+
+# Remove trailing blank lines left behind
+sed -i 's/[[:space:]]*$//' "$MSG_FILE"
+perl -i -0pe 's/\n+$/\n/' "$MSG_FILE"
+
+exit 0

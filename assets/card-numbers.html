@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 3px,
+      rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Center glow */
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(45,175,140,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #5de4c7 30%, #2a8f82 60%, transparent);
+  }
+
+  .bottom-line {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #5de4c7 30%, #2a8f82 60%, transparent);
+    opacity: 0.4;
+  }
+
+  /* Corner brand */
+  .brand-tl {
+    position: absolute;
+    top: 36px;
+    left: 56px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
+
+  .brand-tr {
+    position: absolute;
+    top: 36px;
+    right: 56px;
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Main content */
+  .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 0;
+    position: relative;
+  }
+
+  .stat-row + .stat-row {
+    border-top: 1px solid rgba(93,228,199,0.1);
+  }
+
+  .stat-number {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 112px;
+    line-height: 1;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    color: #3a4a5a;
+    letter-spacing: 0.12em;
+    text-align: left;
+    min-width: 180px;
+  }
+
+  /* Bottom tagline */
+  .tagline {
+    position: absolute;
+    bottom: 36px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #2a8f82;
+    letter-spacing: 0.25em;
+    opacity: 0.6;
+  }
+
+  /* Side decorative lines */
+  .side-left {
+    position: absolute;
+    left: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 300px;
+    background: linear-gradient(180deg, transparent, #5de4c7 30%, #5de4c7 70%, transparent);
+    opacity: 0.15;
+  }
+
+  .side-right {
+    position: absolute;
+    right: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 300px;
+    background: linear-gradient(180deg, transparent, #5de4c7 30%, #5de4c7 70%, transparent);
+    opacity: 0.15;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-line"></div>
+<div class="bottom-line"></div>
+<div class="glow"></div>
+<div class="side-left"></div>
+<div class="side-right"></div>
+
+<div class="brand-tl">AGENT ATHENA 🦉</div>
+<div class="brand-tr">Open Source · Free Forever</div>
+
+<div class="content">
+
+  <div class="stat-row">
+    <div class="stat-number">14</div>
+    <div class="stat-label">AGENTS</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-number">1</div>
+    <div class="stat-label">INSTALL SCRIPT</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-number">&lt;1HR</div>
+    <div class="stat-label">TO OPERATIONAL</div>
+  </div>
+
+</div>
+
+<div class="tagline">GODDESS OF WISDOM &amp; CRAFT · BUILDS WHILE YOU SLEEP</div>
+
+</body>
+</html>

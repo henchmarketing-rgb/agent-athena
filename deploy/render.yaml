@@ -1,0 +1,61 @@
+# =============================================================================
+# Athena cloud gateway — Render.com deployment template
+# =============================================================================
+#
+# Alternative to deploy/fly.toml. Render's free tier suits operators who want
+# a managed Linux box with a persistent disk and zero ops.
+#
+# Setup:
+#   1. Push your fork of Athena to GitHub
+#   2. Render dashboard > New > Blueprint > connect your repo
+#   3. Render reads this render.yaml and provisions a web service + disk
+#   4. Set environment secrets in the dashboard (or via the Render API):
+#         DISCORD_BOT_TOKEN, ANTHROPIC_API_KEY (or your model provider key),
+#         BRAVE_SEARCH_API_KEY, GITHUB_TOKEN, FIRECRAWL_API_KEY,
+#         DISCORD_GUILD_ID, DISCORD_ATHENA_CHANNEL_ID,
+#         DISCORD_POSEIDON_CHANNEL_ID, DISCORD_ICARUS_CHANNEL_ID,
+#         DISCORD_HERACLES_CHANNEL_ID, DISCORD_FORGE_CHANNEL_ID,
+#         DISCORD_ARGUS_CHANNEL_ID, DISCORD_RECOVERY_CHANNEL_ID,
+#         ALERT_WEBHOOK_URL
+#   5. Click Apply. Render builds + deploys. Monitor logs in dashboard.
+#
+# Notes:
+#   - Free tier sleeps after 15 min idle. For 24/7 keep-alive, upgrade to
+#     Starter ($7/mo) — comparable to a small VPS.
+#   - Persistent disk preserves ~/.openclaw across deploys. 1 GB is plenty
+#     for a single operator; bump if you have many projects + sessions.
+# =============================================================================
+
+services:
+  - type: web
+    name: athena-gateway
+    runtime: node
+    plan: starter
+    region: oregon                 # change to your region: ohio, frankfurt, singapore, oregon
+    branch: main
+    rootDir: .
+    buildCommand: npm install
+    startCommand: bash install.sh --resume && openclaw gateway start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOME
+        value: /var/data/home
+      - key: ATHENA_REPO
+        sync: false                # set in dashboard
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: DISCORD_GUILD_ID
+        sync: false
+      - key: DISCORD_ATHENA_CHANNEL_ID
+        sync: false
+      - key: ALERT_WEBHOOK_URL
+        sync: false
+    disk:
+      name: athena-data
+      mountPath: /var/data
+      sizeGB: 1
+    healthCheckPath: /

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+  }
+
+  /* Scanline texture */
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 3px,
+      rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Corner glow */
+  body::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(45,175,140,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7 0%, #2a8f82 50%, transparent 100%);
+  }
+
+  .container {
+    padding: 44px 64px 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+
+  .brand-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .headline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 58px;
+    line-height: 1.25;
+    margin-bottom: 36px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 40%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #5de4c7 0%, #2a8f82 25%, rgba(42,143,130,0.15) 70%, transparent 100%);
+    margin-bottom: 28px;
+  }
+
+  .agent-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 72px;
+    flex: 1;
+    align-items: stretch;
+  }
+
+  .agent-grid > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .col-header {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #5de4c7;
+    letter-spacing: 0.18em;
+    margin-bottom: 14px;
+    opacity: 0.75;
+  }
+
+  .agent-row {
+    display: flex;
+    align-items: center;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(93,228,199,0.07);
+    gap: 20px;
+    flex: 1;
+  }
+
+  .agent-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7.5px;
+    color: #5de4c7;
+    min-width: 118px;
+    letter-spacing: 0.04em;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    background: rgba(93,228,199,0.3);
+    flex-shrink: 0;
+  }
+
+  .agent-role {
+    font-size: 13px;
+    color: #6a7a8a;
+    letter-spacing: 0.04em;
+  }
+
+  .footer {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(93,228,199,0.12);
+  }
+
+  .install-cmd {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #5de4c7;
+    background: rgba(93,228,199,0.06);
+    border: 1px solid rgba(93,228,199,0.18);
+    padding: 10px 22px;
+    letter-spacing: 0.04em;
+  }
+
+  .prompt {
+    color: #2a6f60;
+  }
+
+  .github-url {
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+<div class="container">
+
+  <div class="brand-row">
+    <div class="brand-name">AGENT ATHENA 🦉</div>
+    <div class="brand-tag">Open Source · Multi-Agent AI</div>
+  </div>
+
+  <div class="headline">YOUR AI<br>COMPANY.</div>
+
+  <div class="divider"></div>
+
+  <div class="agent-grid">
+    <div>
+      <div class="col-header">── WORKSPACE AGENTS ──</div>
+      <div class="agent-row"><span class="agent-name">ATHENA</span><span class="dot"></span><span class="agent-role">Command centre, coordinator</span></div>
+      <div class="agent-row"><span class="agent-name">POSEIDON</span><span class="dot"></span><span class="agent-role">Deep research, intelligence</span></div>
+      <div class="agent-row"><span class="agent-name">ICARUS</span><span class="dot"></span><span class="agent-role">Strategy, Paperclip CEO</span></div>
+      <div class="agent-row"><span class="agent-name">FORGE</span><span class="dot"></span><span class="agent-role">Dev, builds, deployments</span></div>
+      <div class="agent-row"><span class="agent-name">ARGUS</span><span class="dot"></span><span class="agent-role">Monitoring, cost tracking</span></div>
+      <div class="agent-row"><span class="agent-name">HERACLES</span><span class="dot"></span><span class="agent-role">Night oversight, QC</span></div>
+      <div class="agent-row"><span class="agent-name">RECOVERY</span><span class="dot"></span><span class="agent-role">Emergency failsafe</span></div>
+    </div>
+    <div>
+      <div class="col-header">── OFFICE AGENTS ──</div>
+      <div class="agent-row"><span class="agent-name">COPYWRITER</span><span class="dot"></span><span class="agent-role">Brand content</span></div>
+      <div class="agent-row"><span class="agent-name">OUTREACH</span><span class="dot"></span><span class="agent-role">Cold email, LinkedIn</span></div>
+      <div class="agent-row"><span class="agent-name">ANALYTICS</span><span class="dot"></span><span class="agent-role">KPIs, reports</span></div>
+      <div class="agent-row"><span class="agent-name">SEO</span><span class="dot"></span><span class="agent-role">Audits, content briefs</span></div>
+      <div class="agent-row"><span class="agent-name">SOCIAL</span><span class="dot"></span><span class="agent-role">Social media</span></div>
+      <div class="agent-row"><span class="agent-name">ADS</span><span class="dot"></span><span class="agent-role">PPC, A/B variants</span></div>
+      <div class="agent-row"><span class="agent-name">VISUAL DIR.</span><span class="dot"></span><span class="agent-role">Art direction</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="install-cmd"><span class="prompt">$</span> bash install.sh</div>
+    <div class="github-url">github.com/henchmarketing-rgb/agent-athena</div>
+  </div>
+
+</div>
+</body>
+</html>

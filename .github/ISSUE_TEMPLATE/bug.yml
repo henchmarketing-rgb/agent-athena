@@ -1,0 +1,58 @@
+name: Bug report
+description: Something is broken or behaving unexpectedly
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: A clear description of the bug
+      placeholder: e.g. install.sh fails at Step 3 with "command not found: jq"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Exact commands or actions
+      placeholder: |
+        1. Fresh Ubuntu 24.04 box
+        2. git clone ...
+        3. bash install.sh
+        4. Error appears at step ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: e.g. macOS 14.5, Ubuntu 24.04, Debian 12
+    validations:
+      required: true
+  - type: input
+    id: node-version
+    attributes:
+      label: Node version
+      placeholder: e.g. 20.11.0 (run `node --version`)
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Athena commit SHA
+      description: Run `git rev-parse HEAD` in the repo
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Paste relevant output. Redact any secrets.
+      render: shell

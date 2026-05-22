@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1600px;
+    height: 900px;
+    background: #0a0e13;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    color: #c9d1d9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 44px;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(45,175,140,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5de4c7, #2a8f82, transparent);
+  }
+
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+
+  .brand-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #2a8f82;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    color: #3a4a5a;
+    letter-spacing: 0.2em;
+  }
+
+  .headline {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 72px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      repeating-linear-gradient(90deg, rgba(10,14,19,0) 0px, rgba(10,14,19,0) 9px, rgba(10,14,19,0.38) 9px, rgba(10,14,19,0.38) 10px),
+      linear-gradient(145deg, #b0f8ea 0%, #5de4c7 45%, #2aaf90 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subhead {
+    font-size: 16px;
+    color: #4a5a6a;
+    letter-spacing: 0.12em;
+    margin-bottom: 44px;
+    text-transform: uppercase;
+  }
+
+  .terminal {
+    flex: 1;
+    background: rgba(93,228,199,0.03);
+    border: 1px solid rgba(93,228,199,0.12);
+    padding: 48px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 0;
+    position: relative;
+  }
+
+  .terminal::before {
+    content: '● ● ●';
+    position: absolute;
+    top: 14px;
+    left: 20px;
+    font-size: 10px;
+    color: rgba(93,228,199,0.2);
+    letter-spacing: 6px;
+  }
+
+  .cmd-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .step-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: rgba(93,228,199,0.3);
+    min-width: 24px;
+  }
+
+  .prompt {
+    color: #2a6f60;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .cmd {
+    font-size: 28px;
+    color: #5de4c7;
+    letter-spacing: 0.04em;
+  }
+
+  .cmd-comment {
+    font-size: 14px;
+    color: #3a4a5a;
+    margin-left: auto;
+    letter-spacing: 0.06em;
+  }
+
+  .cmd-separator {
+    height: 1px;
+    background: rgba(93,228,199,0.07);
+    margin: 0 0;
+  }
+
+  .footer {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-size: 14px;
+    color: #4a5a6a;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-left span {
+    color: #5de4c7;
+  }
+
+  .github-url {
+    font-size: 12px;
+    color: #3a4a5a;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="top-line"></div>
+
+<div class="brand-row">
+  <div class="brand-name">AGENT ATHENA 🦉</div>
+  <div class="brand-tag">Open Source · One Script</div>
+</div>
+
+<div class="headline">THREE<br>COMMANDS.</div>
+<div class="subhead">Your AI company. Fully operational.</div>
+
+<div class="terminal">
+  <div class="cmd-row">
+    <span class="step-num">01</span>
+    <span class="prompt">$</span>
+    <span class="cmd">git clone https://github.com/henchmarketing-rgb/agent-athena.git</span>
+  </div>
+  <div class="cmd-separator"></div>
+  <div class="cmd-row">
+    <span class="step-num">02</span>
+    <span class="prompt">$</span>
+    <span class="cmd">cd agent-athena</span>
+  </div>
+  <div class="cmd-separator"></div>
+  <div class="cmd-row">
+    <span class="step-num">03</span>
+    <span class="prompt">$</span>
+    <span class="cmd">bash install.sh</span>
+    <span class="cmd-comment">// handles everything</span>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-left">Then say hello to <span>Athena</span> in Discord. She takes over from there.</div>
+  <div class="github-url">github.com/henchmarketing-rgb/agent-athena</div>
+</div>
+
+</body>
+</html>

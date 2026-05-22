@@ -1,0 +1,93 @@
+# =============================================================================
+# Athena cloud gateway — Fly.io deployment template
+# =============================================================================
+#
+# Deploys the OpenClaw gateway as a long-running process on Fly.io.
+#
+# Why Fly: simplest path to a 24/7 gateway with a public hostname (so Discord
+# webhooks reach you without ngrok), a small persistent volume for ~/.openclaw
+# workspaces + sessions, and free-tier-friendly pricing for one operator.
+#
+# Prerequisites:
+#   - Fly account (free)
+#   - flyctl installed:  brew install flyctl  /  curl -L https://fly.io/install.sh | sh
+#   - flyctl auth login
+#
+# Setup (one-time):
+#   1. cp deploy/fly.toml fly.toml      # local copy you can edit
+#   2. fly apps create <your-app-name>  # pick a unique name
+#   3. fly volumes create athena_data --region <your-region> --size 3
+#   4. Edit fly.toml: replace <your-app-name> below
+#   5. Set secrets — these mirror ~/.env.secrets:
+#         fly secrets set DISCORD_BOT_TOKEN="xxx"
+#         fly secrets set ANTHROPIC_API_KEY="xxx"     # or OPENAI/GEMINI/etc.
+#         fly secrets set BRAVE_SEARCH_API_KEY="xxx"
+#         fly secrets set GITHUB_TOKEN="ghp_xxx"
+#         fly secrets set DISCORD_GUILD_ID="xxx"
+#         fly secrets set DISCORD_ATHENA_CHANNEL_ID="xxx"
+#         # ... and the other 6 channel IDs
+#         fly secrets set ALERT_WEBHOOK_URL="https://hc-ping.com/<uuid>"
+#   6. fly deploy
+#   7. Watch logs:  fly logs
+#
+# To update after a config change locally:
+#   git push (your remote) && fly deploy
+#
+# See CLOUD-DEPLOY.md for the alternative VPS path ($4.50–$7/month).
+# =============================================================================
+
+app = "<your-app-name>"
+primary_region = "lhr"   # London. Pick the region nearest you.
+kill_signal = "SIGTERM"
+kill_timeout = "30s"
+
+[build]
+  # We use Node's official image and clone Athena at build time. If you fork
+  # Athena, change the git clone URL in the Dockerfile-equivalent below.
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["paketo-buildpacks/nodejs"]
+
+[env]
+  PORT = "3000"
+  NODE_ENV = "production"
+  ATHENA_REPO = "/app"
+  HOME = "/data/home"     # mapped to the persistent volume below
+
+[[mounts]]
+  source = "athena_data"
+  destination = "/data"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 3000
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 100
+    soft_limit = 80
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "30s"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "1gb"
+
+[deploy]
+  release_command = "bash install.sh --resume"
+  strategy = "immediate"

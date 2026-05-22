@@ -1,0 +1,38 @@
+name: Feature request
+description: Suggest an idea or enhancement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Don't lead with the solution. Describe the friction.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would you fix this?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you think about? Why this approach?
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Single agent (Athena, Forge, Icarus, etc.)
+        - Install / onboarding
+        - Memory / compaction
+        - Discord integration
+        - Paperclip integration
+        - Documentation
+        - Other
+    validations:
+      required: true
