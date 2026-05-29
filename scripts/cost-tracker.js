@@ -30,8 +30,10 @@ const budgetsPath = budgetsIdx !== -1
 
 // Approximate pricing per 1M tokens (as of 2026)
 const PRICING = {
+  'claude-opus-4-8': { input: 5.00, output: 25.00 },
+  'claude-opus-4-7': { input: 5.00, output: 25.00 },
   'claude-sonnet-4-6': { input: 3.00, output: 15.00 },
-  'claude-opus-4-6': { input: 15.00, output: 75.00 },
+  'claude-opus-4-6': { input: 5.00, output: 25.00 },
   default: { input: 3.00, output: 15.00 }
 }
 
