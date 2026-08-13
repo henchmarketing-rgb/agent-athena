@@ -8,6 +8,12 @@ permissions:
   contents: write
   pull-requests: write
   checks: read
+  # gh pr checks --watch reads commit statuses (Vercel and other integrations) and
+  # checkSuite.workflowRun. Without these two the merge step dies on
+  # 'Resource not accessible by integration' — measured 2026-08-13, 12 open patch
+  # PRs across the estate were stuck on exactly that.
+  actions: read
+  statuses: read
 
 jobs:
   auto-merge:
