@@ -28,5 +28,8 @@
   "dependencies": {
     "discord.js": "^14.16.3"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "overrides": {
+    "undici": "^6.29.1"
+  }
 }
